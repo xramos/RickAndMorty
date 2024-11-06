@@ -10,7 +10,6 @@ import CoreData
 
 class CoreDataStack {
     
-    private let modelName = "RickAndMorty"
     static let sharedInstance = CoreDataStack()
    
     public lazy var managedContext: NSManagedObjectContext = {
@@ -20,7 +19,7 @@ class CoreDataStack {
     
     public lazy var storeContainer: NSPersistentContainer = {
         
-        let container = NSPersistentContainer(name: self.modelName)
+        let container = NSPersistentContainer(name: Constants.modelName)
         container.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
