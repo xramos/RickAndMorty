@@ -9,4 +9,13 @@ import Foundation
 
 protocol Persistence {
     
+    /**
+     Save character in DB
+     */
+    func saveCharacter(character: Character)
+    
+    /**
+     Get Characters
+     */
+    func getCharacters() -> [Character]
 }
