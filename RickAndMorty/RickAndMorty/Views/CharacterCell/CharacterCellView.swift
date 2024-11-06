@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PreviewSnapshots
 
 struct CharacterCellView: View {
     
@@ -48,8 +49,18 @@ struct CharacterCellView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        CharacterCellView(image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-                          name: "Rick Sanchez",
-                          status: "Alive")
+        snapshots.previews.previewLayout(.sizeThatFits)
+    }
+    
+    static var snapshots: PreviewSnapshots<String> {
+        
+        PreviewSnapshots(configurations: [
+            .init(name: "Default", state: "")
+        ], configure: { state in
+            
+            CharacterCellView(image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+                              name: "Rick Sanchez",
+                              status: "Alive")
+        })
     }
 }

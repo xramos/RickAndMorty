@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PreviewSnapshots
 
 struct NetworkImage: View {
     
@@ -32,7 +33,7 @@ struct NetworkImage: View {
                         .clipShape(RoundedRectangle(cornerRadius: Constants.imageSize))
                         .shadow(color: .gray, radius: Constants.radius)
                 case .failure:
-                    Image("ErrorImage")
+                    Image("errorImage")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: Constants.imageSize, height: Constants.imageSize)
@@ -52,6 +53,17 @@ struct NetworkImage_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        NetworkImage(imageUrlString: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")
+        snapshots.previews.previewLayout(.sizeThatFits)
+    }
+    
+    static var snapshots: PreviewSnapshots<String> {
+        
+        PreviewSnapshots(configurations: [
+            .init(name: "Success", state: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"),
+            .init(name: "Failure", state: "https://rickandmortyapi.com/api/character/avatar/1")
+        ], configure: { state in
+            
+            NetworkImage(imageUrlString: state)
+        })
     }
 }

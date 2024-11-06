@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1A940E282CDBB99E0063FD71 /* PreviewSnapshots in Frameworks */ = {isa = PBXBuildFile; productRef = 1A940E272CDBB99E0063FD71 /* PreviewSnapshots */; };
+		1A940E2A2CDBB99E0063FD71 /* PreviewSnapshotsTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 1A940E292CDBB99E0063FD71 /* PreviewSnapshotsTesting */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1A3F25B82CDA69260021B33C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A940E282CDBB99E0063FD71 /* PreviewSnapshots in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A940E2A2CDBB99E0063FD71 /* PreviewSnapshotsTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,7 @@
 				1A3F25A32CDA69250021B33C /* RickAndMorty */,
 				1A3F25BA2CDA69260021B33C /* RickAndMortyTests */,
 				1A3F25C42CDA69260021B33C /* RickAndMortyUITests */,
+				1A940E232CDBB91E0063FD71 /* Frameworks */,
 				1A3F25A22CDA69250021B33C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +98,13 @@
 				1A3F25C12CDA69260021B33C /* RickAndMortyUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1A940E232CDBB91E0063FD71 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +127,7 @@
 			);
 			name = RickAndMorty;
 			packageProductDependencies = (
+				1A940E272CDBB99E0063FD71 /* PreviewSnapshots */,
 			);
 			productName = RickAndMorty;
 			productReference = 1A3F25A12CDA69250021B33C /* RickAndMorty.app */;
@@ -135,6 +151,7 @@
 			);
 			name = RickAndMortyTests;
 			packageProductDependencies = (
+				1A940E292CDBB99E0063FD71 /* PreviewSnapshotsTesting */,
 			);
 			productName = RickAndMortyTests;
 			productReference = 1A3F25B72CDA69260021B33C /* RickAndMortyTests.xctest */;
@@ -195,6 +212,9 @@
 			);
 			mainGroup = 1A3F25982CDA69250021B33C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1A940E262CDBB99E0063FD71 /* XCRemoteSwiftPackageReference "swiftui-preview-snapshots" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1A3F25A22CDA69250021B33C /* Products */;
 			projectDirPath = "";
@@ -583,6 +603,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1A940E262CDBB99E0063FD71 /* XCRemoteSwiftPackageReference "swiftui-preview-snapshots" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/doordash-oss/swiftui-preview-snapshots";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1A940E272CDBB99E0063FD71 /* PreviewSnapshots */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1A940E262CDBB99E0063FD71 /* XCRemoteSwiftPackageReference "swiftui-preview-snapshots" */;
+			productName = PreviewSnapshots;
+		};
+		1A940E292CDBB99E0063FD71 /* PreviewSnapshotsTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1A940E262CDBB99E0063FD71 /* XCRemoteSwiftPackageReference "swiftui-preview-snapshots" */;
+			productName = PreviewSnapshotsTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1A3F25992CDA69250021B33C /* Project object */;
 }

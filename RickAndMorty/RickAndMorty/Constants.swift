@@ -20,4 +20,6 @@ struct Constants {
     
     static let padding: CGFloat = 12
     static let spacing: CGFloat = 20
+    
+    static let snapshotsPerceptualPrecision: Float = 0.98
 }
