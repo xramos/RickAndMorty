@@ -57,7 +57,15 @@ struct CharacterListView: View {
     @ViewBuilder
     var loadedView: some View {
         
-        Text("TODO: List Characters")
+        List {
+            
+            ForEach(viewModel.characters) { character in
+            
+                CharacterCellView(image: character.image,
+                                  name: character.name,
+                                  status: character.status.rawValue)
+            }
+        }
     }
 }
 
