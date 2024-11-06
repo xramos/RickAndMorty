@@ -59,16 +59,32 @@ struct CharacterListView: View {
         
         List {
             
-            ForEach(viewModel.characters) { character in
-            
-                CharacterCellView(image: character.image,
-                                  name: character.name,
-                                  status: character.status.rawValue)
+            VStack(alignment: .leading) {
+                
+                ForEach(viewModel.characters) { character in
+                    
+                    CharacterCellView(image: character.image,
+                                      name: character.name,
+                                      status: character.status.rawValue)
+                }
             }
+            .padding([.top, .leading, .trailing], Constants.padding)
+            .padding(.bottom, Constants.padding)
+            .listRowSeparatorTint(.clear)
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets())
         }
+        .scrollContentBackground(.hidden)
+        .listStyle(PlainListStyle())
     }
 }
 
-#Preview {
-    CharacterListView()
+// MARK: - Previews
+
+struct CharacterListView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        
+        CharacterListView()
+    }
 }

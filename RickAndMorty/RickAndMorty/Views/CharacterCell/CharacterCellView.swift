@@ -21,13 +21,13 @@ struct CharacterCellView: View {
     
     var body: some View {
         
-        VStack {
+        VStack(alignment: .leading) {
             
-            HStack(spacing: 12) {
+            HStack(spacing: Constants.spacing) {
                 
                 NetworkImage(imageUrlString: image)
                 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading) {
                     
                     Text(name)
                         .font(.headline)
@@ -37,12 +37,19 @@ struct CharacterCellView: View {
                 }
             }
             
-        }.padding(.bottom, 8)
+            Divider()
+        }
     }
 }
 
-#Preview {
-    CharacterCellView(image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-                      name: "Rick Sanchez",
-                      status: "Alive")
+// MARK: - Previews
+
+struct CharacterCellView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        
+        CharacterCellView(image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+                          name: "Rick Sanchez",
+                          status: "Alive")
+    }
 }

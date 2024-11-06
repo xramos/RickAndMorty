@@ -17,4 +17,7 @@ struct Constants {
     
     static let imageSize: CGFloat = 60
     static let radius: CGFloat = 2
+    
+    static let padding: CGFloat = 12
+    static let spacing: CGFloat = 20
 }

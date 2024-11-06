@@ -46,6 +46,12 @@ struct NetworkImage: View {
     }
 }
 
-#Preview {
-    NetworkImage(imageUrlString: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")
+// MARK: - Previews
+
+struct NetworkImage_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        
+        NetworkImage(imageUrlString: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")
+    }
 }
