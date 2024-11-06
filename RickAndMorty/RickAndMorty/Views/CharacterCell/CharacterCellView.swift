@@ -30,11 +30,15 @@ struct CharacterCellView: View {
                 
                 VStack(alignment: .leading) {
                     
+                    Spacer()
+                    
                     Text(name)
                         .font(.headline)
                     
                     Text(status)
                         .font(.caption)
+                    
+                    Spacer()
                 }
             }
             

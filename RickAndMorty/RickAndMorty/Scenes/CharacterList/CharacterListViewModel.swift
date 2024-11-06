@@ -44,7 +44,7 @@ class CharacterListViewModel: ObservableObject {
                 
             }, receiveValue: { (characters: [Character]) in
                 
-                self.characters.append(contentsOf: characters)
+                self.characters = characters
             })
     }
 }
