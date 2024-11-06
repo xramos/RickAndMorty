@@ -9,5 +9,9 @@ import Foundation
 
 struct Constants {
     
+    static let baseURL = "https://rickandmortyapi.com/api"
+    
+    static let testBaseURL = "http://jsonplaceholder.typicode.com"
+    
     static let modelName = "RickAndMorty"
 }

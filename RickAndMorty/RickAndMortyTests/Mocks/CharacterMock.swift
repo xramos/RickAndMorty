@@ -15,9 +15,32 @@ final class CharacterMock {
     let name = "Rick Sanchez"
     let status = "Alive"
     let species = "Human"
-    let type = ""
+    let type = "Genetic experiment"
     let gender = "Male"
     let image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+    
+    // MARK: - DBCharacter
+    
+    func generateDBCharacter(id: Int? = nil,
+                             name: String? = nil,
+                             status: String? = nil,
+                             species: String? = nil,
+                             type: String? = nil,
+                             gender: String? = nil,
+                             image: String? = nil) -> DBCharacter {
+        
+        let dbCharacter = DBCharacter(context: TestCoreDataStack().managedContext)
+        
+        dbCharacter.id = Int32(id ?? self.id)
+        dbCharacter.name = name ?? self.name
+        dbCharacter.status = status ?? self.status
+        dbCharacter.species = species ?? self.species
+        dbCharacter.type = type ?? self.type
+        dbCharacter.gender = gender ?? self.gender
+        dbCharacter.image = image ?? self.image
+        
+        return dbCharacter
+    }
     
     // MARK: - Character
     
