@@ -10,20 +10,16 @@ import SwiftUI
 struct NetworkImage: View {
     
     let imageUrlString: String
-    var width: CGFloat? = 40
-    var height: CGFloat? = 40
     
-    init(imageUrlString: String, width: CGFloat? = nil, height: CGFloat? = nil) {
+    init(imageUrlString: String) {
         self.imageUrlString = imageUrlString
-        self.width = width
-        self.height = height
     }
     
     var body: some View {
         
         VStack {
             
-            AsyncImage(url: URL(string: imageUrlString)) { phase in
+            CachedAsyncImage(url: URL(string: imageUrlString)) { phase in
                 
                 switch phase {
                 case .empty:
@@ -32,16 +28,16 @@ struct NetworkImage: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: width, maxHeight: height)
-                        .clipShape(RoundedRectangle(cornerRadius: width ?? 40))
-                        .shadow(color: .gray, radius: 5)
+                        .frame(width: Constants.imageSize, height: Constants.imageSize)
+                        .clipShape(RoundedRectangle(cornerRadius: Constants.imageSize))
+                        .shadow(color: .gray, radius: Constants.radius)
                 case .failure:
                     Image("ErrorImage")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: width, maxHeight: height)
-                        .clipShape(RoundedRectangle(cornerRadius: width ?? 40))
-                        .shadow(color: .gray, radius: 5)
+                        .frame(width: Constants.imageSize, height: Constants.imageSize)
+                        .clipShape(RoundedRectangle(cornerRadius: Constants.imageSize))
+                        .shadow(color: .gray, radius: Constants.radius)
                 @unknown default:
                     EmptyView()
                 }

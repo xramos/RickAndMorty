@@ -14,4 +14,7 @@ struct Constants {
     static let testBaseURL = "http://jsonplaceholder.typicode.com"
     
     static let modelName = "RickAndMorty"
+    
+    static let imageSize: CGFloat = 60
+    static let radius: CGFloat = 2
 }
