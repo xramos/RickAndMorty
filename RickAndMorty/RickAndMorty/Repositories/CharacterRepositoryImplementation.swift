@@ -50,13 +50,32 @@ extension CharacterRepositoryImplementation: CharacterRepository {
             remoteDataSource.removeGetLocationCache(locationId: locationId)
         }
         
-        return remoteDataSource.getLocation(locationId: locationId).map { serverLocation -> CharacterLocation in
+        if remoteDataSource.isGetLocationAvailable(locationId: locationId) {
             
-            let location = serverLocation.convertToEntity()
+            if let location = localDataSource.getLocationById(id: locationId) {
+                
+                return Result.Publisher(location).eraseToAnyPublisher()
+                
+            } else {
+                
+                // Try Again
+                return getLocation(isForced: true,
+                                   locationId: locationId)
+            }
+        } else {
             
-            return location
+            return remoteDataSource.getLocation(locationId: locationId).map { serverLocation -> CharacterLocation in
+                
+                let location = serverLocation.convertToEntity()
+                
+                self.localDataSource.saveLocation(location: location)
+                
+                self.remoteDataSource.addGetLocationCache(locationId: locationId)
+                
+                return location
+            }
+            .mapError({ $0 })
+            .eraseToAnyPublisher()
         }
-        .mapError({ $0 })
-        .eraseToAnyPublisher()
     }
 }

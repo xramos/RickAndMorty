@@ -15,13 +15,20 @@ class CharacterRemoteDataSource {
     
     static let getLocationURL: String = "/location"
     
+    static let getLocationCachePath: String = "location/@i"
+    static let getLocationCacheTime: Double = CacheTime.short.rawValue
+    
     private let baseURLString: String
     private let session: URLSession
+    private let cache: Caching
     
-    init(baseURL: String = Constants.baseURL, session: URLSession = URLSession.shared) {
+    init(baseURL: String = Constants.baseURL,
+         session: URLSession = URLSession.shared,
+         cache: Caching = CacheManager(type: CacheType.remote)) {
         
         self.baseURLString = baseURL
         self.session = session
+        self.cache = cache
     }
     
     func getCharacters(page: Int) -> AnyPublisher<ServerArrayResponse<ServerCharacter>, Error> {
@@ -45,6 +52,7 @@ class CharacterRemoteDataSource {
     }
 }
 
+// MARK: - Endpoints
 
 extension CharacterRemoteDataSource {
     
@@ -68,5 +76,27 @@ extension CharacterRemoteDataSource {
         let urlRequest = URLRequest(url: url!)
                 
         return urlRequest
+    }
+}
+
+// MARK: - Cache
+
+extension CharacterRemoteDataSource {
+    
+    func isGetLocationAvailable(locationId: Int) -> Bool {
+        
+        return cache.isAvailable(key: String(format: "\(CharacterRemoteDataSource.getLocationCachePath)", locationId),
+                                 cacheTime: CharacterRemoteDataSource.getLocationCacheTime,
+                                 isReachable: true)
+    }
+    
+    func addGetLocationCache(locationId: Int) {
+        
+        cache.add(key: String(format: "\(CharacterRemoteDataSource.getLocationCachePath)", locationId))
+    }
+    
+    func removeGetLocationCache(locationId: Int) {
+        
+        cache.evict(key: String(format: "\(CharacterRemoteDataSource.getLocationCachePath)", locationId))
     }
 }
