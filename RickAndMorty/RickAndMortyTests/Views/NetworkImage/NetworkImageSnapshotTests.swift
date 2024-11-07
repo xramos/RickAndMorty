@@ -12,7 +12,7 @@ import PreviewSnapshotsTesting
 
 final class NetworkImageSnapshotTests: XCTestCase {
 
-    func testSnapshots() {
+    func testNetworkImageSnapshots() {
      
         NetworkImage_Previews.snapshots.assertSnapshots(as: .image(perceptualPrecision: Constants.snapshotsPerceptualPrecision,
                                                                    layout: .device(config: .iPhoneX(.portrait))))

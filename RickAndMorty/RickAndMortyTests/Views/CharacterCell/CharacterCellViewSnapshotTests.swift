@@ -12,7 +12,7 @@ import PreviewSnapshotsTesting
 
 final class CharacterCellViewSnapshotTests: XCTestCase {
 
-    func testSnapshots() {
+    func testCharacterCellSnapshots() {
         
         CharacterCellView_Previews.snapshots.assertSnapshots(as: .image(perceptualPrecision: Constants.snapshotsPerceptualPrecision,
                                                                         layout: .device(config: .iPhoneX(.portrait))))

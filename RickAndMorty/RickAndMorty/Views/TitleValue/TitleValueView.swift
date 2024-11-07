@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PreviewSnapshots
 
 struct TitleValueView: View {
     
@@ -38,7 +39,17 @@ struct TitleValueView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        TitleValueView(title: "Gender",
-                       value: "Unknown")
+        snapshots.previews.previewLayout(.sizeThatFits)
+    }
+    
+    static var snapshots: PreviewSnapshots<String> {
+        
+        PreviewSnapshots(configurations: [
+            .init(name: "Default", state: "")
+        ], configure: { state in
+            
+            TitleValueView(title: "Gender",
+                           value: "Unknown")
+        })
     }
 }
