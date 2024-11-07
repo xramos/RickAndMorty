@@ -20,6 +20,7 @@ final class DBCharacterUnitTests: XCTestCase {
         let character = dbCharacter.convertToEntity()
         
         // Then
+        XCTAssertNotNil(character)
         XCTAssertEqual(Int16(character.id), dbCharacter.id)
         XCTAssertEqual(character.name, dbCharacter.name)
         XCTAssertEqual(character.status.rawValue, dbCharacter.status)
@@ -27,5 +28,7 @@ final class DBCharacterUnitTests: XCTestCase {
         XCTAssertEqual(character.type, dbCharacter.type)
         XCTAssertEqual(character.gender.rawValue, dbCharacter.gender)
         XCTAssertEqual(character.image, dbCharacter.image)
+        XCTAssertEqual(Int16(character.originId), dbCharacter.originId)
+        XCTAssertEqual(Int16(character.locationId), dbCharacter.locationId)
     }
 }
