@@ -23,9 +23,9 @@ class CharacterRepositoryImplementation {
 
 extension CharacterRepositoryImplementation: CharacterRepository {
     
-    func getCharacters() -> AnyPublisher<[Character], any Error> {
+    func getCharacters(page: Int) -> AnyPublisher<CharacterInformation, any Error> {
         
-        return remoteDataSource.getCharacters().map { serverCharacters -> [Character] in
+        return remoteDataSource.getCharacters(page: page).map { serverCharacters -> CharacterInformation in
             
             var characters: [Character] = []
             
@@ -36,7 +36,8 @@ extension CharacterRepositoryImplementation: CharacterRepository {
                 characters.append(character)
             }
             
-            return characters
+            return CharacterInformation(pages: serverCharacters.info.pages,
+                                        characters: characters)
         }
         .mapError({ $0 })
         .eraseToAnyPublisher()

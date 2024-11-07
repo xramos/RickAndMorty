@@ -20,8 +20,8 @@ class GetCharactersUseCaseImplementation {
 
 extension GetCharactersUseCaseImplementation: GetCharactersUseCase {
     
-    func execute() -> AnyPublisher<[Character], Error> {
+    func execute(page: Int) -> AnyPublisher<CharacterInformation, Error> {
         
-        return repository.getCharacters()
+        return repository.getCharacters(page: page)
     }
 }
