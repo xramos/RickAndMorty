@@ -18,6 +18,7 @@ struct RickAndMortyApp: App {
                 
                 CharacterListView()
             }
+            .tint(Color.tertiary)
         }
     }
 }
