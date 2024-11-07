@@ -57,22 +57,22 @@ struct CharacterListView: View {
     @ViewBuilder
     var loadedView: some View {
         
-        List {
+        ScrollView {
             
-            ForEach(viewModel.characters) { character in
+            VStack {
                 
-                NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(character: character))) {
+                ForEach(viewModel.characters) { character in
                     
-                    CharacterCellView(image: character.image,
-                                      name: character.name,
-                                      status: character.status.rawValue)
+                    NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(character: character))) {
+                        
+                        CharacterCellView(image: character.image,
+                                          name: character.name,
+                                          status: character.status.rawValue)
+                    }
                 }
-                .padding([.leading, .trailing], Constants.padding)
-                .listRowSeparatorTint(.clear)
-                .listRowBackground(Color.clear)
             }
+            .padding()
         }
-        .listStyle(PlainListStyle())
     }
 }
 
@@ -82,6 +82,9 @@ struct CharacterListView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        CharacterListView()
+        ForEach(ColorScheme.allCases, id: \.self) {
+            CharacterListView()
+                .preferredColorScheme($0)
+        }
     }
 }

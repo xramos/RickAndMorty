@@ -23,12 +23,14 @@ struct TitleValueView: View {
         HStack {
             
             Text(title)
-                .font(.caption)
+                .font(.callout)
+                .foregroundStyle(Color.primary)
             
             Spacer()
             
             Text(value)
-                .font(.caption2)
+                .font(.callout)
+                .foregroundStyle(Color.secondary)
         }
     }
 }
@@ -42,14 +44,16 @@ struct TitleValueView_Previews: PreviewProvider {
         snapshots.previews.previewLayout(.sizeThatFits)
     }
     
-    static var snapshots: PreviewSnapshots<String> {
-        
+    static var snapshots: PreviewSnapshots<ColorScheme> {
+                
         PreviewSnapshots(configurations: [
-            .init(name: "Default", state: "")
+            .init(name: "Light", state: .light),
+            .init(name: "Dark", state: .dark)
         ], configure: { state in
             
             TitleValueView(title: "Gender",
                            value: "Unknown")
+            .preferredColorScheme(state)
         })
     }
 }

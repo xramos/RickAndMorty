@@ -22,7 +22,7 @@ struct CharacterCellView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading) {
+        VStack {
             
             HStack(spacing: Constants.spacing) {
                 
@@ -30,19 +30,21 @@ struct CharacterCellView: View {
                 
                 VStack(alignment: .leading) {
                     
-                    Spacer()
-                    
                     Text(name)
-                        .font(.headline)
+                        .font(.callout)
+                        .foregroundStyle(Color.primary)
                     
                     Text(status)
                         .font(.caption)
-                    
-                    Spacer()
+                        .foregroundStyle(Color.secondary)
                 }
+                
+                Spacer()
             }
-            
-            Divider()
+            .padding(Constants.padding)
+            .background(Color.primaryContainer)
+            .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius, style: .continuous))
+            .shadow(color: Color.neutral, radius: Constants.radius)
         }
     }
 }
@@ -56,15 +58,17 @@ struct CharacterCellView_Previews: PreviewProvider {
         snapshots.previews.previewLayout(.sizeThatFits)
     }
     
-    static var snapshots: PreviewSnapshots<String> {
+    static var snapshots: PreviewSnapshots<ColorScheme> {
         
         PreviewSnapshots(configurations: [
-            .init(name: "Default", state: "")
+            .init(name: "Light", state: .light),
+            .init(name: "Dark", state: .dark)
         ], configure: { state in
             
             CharacterCellView(image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
                               name: "Rick Sanchez",
                               status: "Alive")
+            .preferredColorScheme(state)
         })
     }
 }
