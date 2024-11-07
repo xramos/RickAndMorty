@@ -42,4 +42,16 @@ extension CharacterRepositoryImplementation: CharacterRepository {
         .mapError({ $0 })
         .eraseToAnyPublisher()
     }
+    
+    func getLocation(locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
+        
+        return remoteDataSource.getLocation(locationId: locationId).map { serverLocation -> CharacterLocation in
+            
+            let location = serverLocation.convertToEntity()
+            
+            return location
+        }
+        .mapError({ $0 })
+        .eraseToAnyPublisher()
+    }
 }
