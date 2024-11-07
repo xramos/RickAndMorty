@@ -32,11 +32,11 @@ struct CharacterCellView: View {
                     
                     Text(name)
                         .font(.callout)
-                        .foregroundStyle(Color.primary)
+                        .foregroundStyle(Color.primaryMain)
                     
                     Text(status)
                         .font(.caption)
-                        .foregroundStyle(Color.secondary)
+                        .foregroundStyle(Color.secondaryMain)
                 }
                 
                 Spacer()

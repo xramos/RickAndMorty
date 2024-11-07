@@ -15,6 +15,19 @@ struct CharacterDetailView: View {
         
         VStack {
             
+            content
+        }
+        .task {
+            
+            // TODO: Get Location
+        }
+    }
+    
+    @ViewBuilder
+    var content: some View {
+        
+        VStack {
+            
             VStack {
                 
                 NetworkImage(imageUrlString: viewModel.character.image)
@@ -23,7 +36,7 @@ struct CharacterDetailView: View {
                     .font(.title)
                 
                 Divider()
-                    .background(Color.tertiary)
+                    .background(Color.accentColor)
                 
                 VStack(spacing: 10) {
                     
@@ -63,7 +76,9 @@ struct CharacterDetailView_Previews: PreviewProvider {
                                   species: "Human",
                                   type: "",
                                   gender: .male,
-                                  image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")
+                                  image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+                                  originId: 1,
+                                  locationId: 1)
         
         ForEach(ColorScheme.allCases, id: \.self) {
             CharacterDetailView(viewModel: CharacterDetailViewModel(character: character))

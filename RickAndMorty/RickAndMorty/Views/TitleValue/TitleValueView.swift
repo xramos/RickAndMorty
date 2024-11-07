@@ -24,13 +24,13 @@ struct TitleValueView: View {
             
             Text(title)
                 .font(.callout)
-                .foregroundStyle(Color.primary)
+                .foregroundStyle(Color.primaryMain)
             
             Spacer()
             
             Text(value)
                 .font(.callout)
-                .foregroundStyle(Color.secondary)
+                .foregroundStyle(Color.secondaryMain)
         }
     }
 }
