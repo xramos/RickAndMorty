@@ -23,7 +23,7 @@ class CharacterRepositoryMock: CharacterRepository {
             .eraseToAnyPublisher()
     }
     
-    func getLocation(locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
+    func getLocation(isForced: Bool, locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
         
         isGetLocationCalled = true
         

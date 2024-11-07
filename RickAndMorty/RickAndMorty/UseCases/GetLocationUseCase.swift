@@ -10,5 +10,5 @@ import Combine
 
 protocol GetLocationUseCase {
     
-    func execute(locationId: Int) -> AnyPublisher<CharacterLocation, Error>
+    func execute(isForced: Bool, locationId: Int) -> AnyPublisher<CharacterLocation, Error>
 }

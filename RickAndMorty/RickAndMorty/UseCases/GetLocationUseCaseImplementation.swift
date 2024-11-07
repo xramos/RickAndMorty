@@ -20,8 +20,9 @@ class GetLocationUseCaseImplementation {
 
 extension GetLocationUseCaseImplementation: GetLocationUseCase {
     
-    func execute(locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
+    func execute(isForced: Bool, locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
         
-        return repository.getLocation(locationId: locationId)
+        return repository.getLocation(isForced: isForced,
+                                      locationId: locationId)
     }
 }

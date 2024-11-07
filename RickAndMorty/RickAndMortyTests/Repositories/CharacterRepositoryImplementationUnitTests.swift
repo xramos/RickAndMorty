@@ -200,7 +200,7 @@ extension CharacterRepositoryImplementationUnitTests {
         let exp = expectation(description: "expected location")
         
         // When
-        cancellable = sut.getLocation(locationId: locationId)
+        cancellable = sut.getLocation(isForced: true, locationId: locationId)
             .sink(receiveCompletion: { completion in
             
             switch completion {
@@ -242,7 +242,7 @@ extension CharacterRepositoryImplementationUnitTests {
         let exp = expectation(description: "expected location")
         
         // When
-        cancellable = sut.getLocation(locationId: locationId)
+        cancellable = sut.getLocation(isForced: true, locationId: locationId)
             .sink(receiveCompletion: { completion in
                 
                 switch completion {

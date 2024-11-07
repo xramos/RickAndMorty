@@ -42,7 +42,13 @@ extension CharacterRepositoryImplementation: CharacterRepository {
         .eraseToAnyPublisher()
     }
     
-    func getLocation(locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
+    func getLocation(isForced: Bool, locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
+        
+        if isForced {
+            
+            //Remove Cache
+            remoteDataSource.removeGetLocationCache(locationId: locationId)
+        }
         
         return remoteDataSource.getLocation(locationId: locationId).map { serverLocation -> CharacterLocation in
             

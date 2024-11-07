@@ -56,7 +56,7 @@ class CharacterDetailViewModel: ObservableObject {
     
     func getLocation(locationId: Int, completionHandler: @escaping (CharacterLocation?) -> Void) {
         
-        cancellable = getLocationUseCase.execute(locationId: locationId)
+        cancellable = getLocationUseCase.execute(isForced: false, locationId: locationId)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 
