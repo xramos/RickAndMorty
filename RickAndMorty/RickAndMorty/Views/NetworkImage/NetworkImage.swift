@@ -31,14 +31,14 @@ struct NetworkImage: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: Constants.imageSize, height: Constants.imageSize)
                         .clipShape(RoundedRectangle(cornerRadius: Constants.imageSize))
-                        .shadow(color: .gray, radius: Constants.radius)
+                        .shadow(color: Color.neutral, radius: Constants.radius)
                 case .failure:
                     Image("errorImage")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: Constants.imageSize, height: Constants.imageSize)
                         .clipShape(RoundedRectangle(cornerRadius: Constants.imageSize))
-                        .shadow(color: .gray, radius: Constants.radius)
+                        .shadow(color: Color.neutral, radius: Constants.radius)
                 @unknown default:
                     EmptyView()
                 }

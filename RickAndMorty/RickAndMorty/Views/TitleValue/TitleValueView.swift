@@ -23,17 +23,32 @@ struct TitleValueView: View {
         HStack {
             
             Text(title)
-                .font(.caption)
+                .font(.callout)
+                .foregroundStyle(Color.primary)
             
             Spacer()
             
             Text(value)
-                .font(.caption2)
+                .font(.callout)
+                .foregroundStyle(Color.secondary)
         }
     }
 }
 
 // MARK: - Previews
+
+struct TitleValueViews_ColorScheme_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        
+        ForEach(ColorScheme.allCases, id: \.self) {
+            
+            TitleValueView(title: "Gender",
+                           value: "Unknown")
+            .preferredColorScheme($0)
+        }
+    }
+}
 
 struct TitleValueView_Previews: PreviewProvider {
     

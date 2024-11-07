@@ -15,33 +15,39 @@ struct CharacterDetailView: View {
         
         VStack {
             
-            NetworkImage(imageUrlString: viewModel.character.image)
-            
-            Text(viewModel.character.name)
-                .font(.title)
-            
-            Divider()
-            
-            Spacer().frame(height: 20)
-            
-            VStack(spacing: 10) {
+            VStack {
                 
-                TitleValueView(title: "Status:",
-                               value: viewModel.character.status.rawValue)
+                NetworkImage(imageUrlString: viewModel.character.image)
                 
-                TitleValueView(title: "Species:",
-                               value: viewModel.character.species)
+                Text(viewModel.character.name)
+                    .font(.title)
                 
-                TitleValueView(title: "Type:",
-                               value: viewModel.character.type)
+                Divider()
+                    .background(Color.tertiary)
                 
-                TitleValueView(title: "Gender:",
-                               value: viewModel.character.gender.rawValue)
-                
-                Spacer()
+                VStack(spacing: 10) {
+                    
+                    TitleValueView(title: "Status:",
+                                   value: viewModel.character.status.rawValue)
+                    
+                    TitleValueView(title: "Species:",
+                                   value: viewModel.character.species)
+                    
+                    TitleValueView(title: "Type:",
+                                   value: viewModel.character.type)
+                    
+                    TitleValueView(title: "Gender:",
+                                   value: viewModel.character.gender.rawValue)
+                }
             }
+            .padding(Constants.padding)
+            .background(Color.primaryContainer)
+            .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius, style: .continuous))
+            .shadow(color: Color.neutral, radius: Constants.radius)
+            
+            Spacer()
         }
-        .padding()
+        .padding(Constants.padding)
     }
 }
 
@@ -59,6 +65,9 @@ struct CharacterDetailView_Previews: PreviewProvider {
                                   gender: .male,
                                   image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")
         
-        CharacterDetailView(viewModel: CharacterDetailViewModel(character: character))
+        ForEach(ColorScheme.allCases, id: \.self) {
+            CharacterDetailView(viewModel: CharacterDetailViewModel(character: character))
+                .preferredColorScheme($0)
+        }
     }
 }
