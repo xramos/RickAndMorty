@@ -18,4 +18,19 @@ protocol Persistence {
      Get Characters
      */
     func getCharacters() -> [Character]
+    
+    /**
+        Save location in DB
+     */
+    func saveLocation(location: CharacterLocation)
+    
+    /**
+     Get Locations
+     */
+    func getLocations() -> [CharacterLocation]
+    
+    /**
+     Get Location by specified id if found
+     */
+    func getLocationById(id: Int) -> CharacterLocation?
 }
