@@ -15,7 +15,6 @@ class CharacterListViewModel: ObservableObject {
     
     @Published internal var state: State = .loading
     @Published public private(set) var characters: [Character] = []
-    @Published public private(set) var showProgressView = false
     
     private var cancellable: AnyCancellable?
     
@@ -28,7 +27,7 @@ class CharacterListViewModel: ObservableObject {
     
     func getCharacters() {
         
-        showProgressView = true
+        state = .loading
         
         cancellable = getCharactersUseCase.execute()
             .receive(on: DispatchQueue.main)
