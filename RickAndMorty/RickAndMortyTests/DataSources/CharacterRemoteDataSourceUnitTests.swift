@@ -29,11 +29,14 @@ final class CharacterRemoteDataSourceUnitTests: XCTestCase {
 
     func testGetCharactersEndpoint() {
      
+        // Given
+        let page = 1
+        
         // When
-        let response = sut.getCharactersEndpoint()
+        let response = sut.getCharactersEndpoint(page: page)
         
         // Then
         XCTAssertNotNil(response)
-        XCTAssertEqual(response.url?.absoluteString, "\(Constants.testBaseURL)/character")
+        XCTAssertEqual(response.url?.absoluteString, "\(Constants.testBaseURL)/character?page=\(page)")
     }
 }

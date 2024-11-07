@@ -27,7 +27,7 @@ final class GetCharactersImplementationUnitTests: XCTestCase {
         sut = GetCharactersUseCaseImplementation(repository: repository)
         
         // When
-        _ = sut.execute()
+        _ = sut.execute(page: 1)
         
         // Then
         XCTAssertTrue(repository.isGetCharactersCalled)

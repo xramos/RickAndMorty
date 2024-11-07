@@ -9,5 +9,6 @@ import Foundation
 
 struct ServerArrayResponse<T: Codable>: Codable {
     
+    let info: ServerInformation
     let results: [T]
 }

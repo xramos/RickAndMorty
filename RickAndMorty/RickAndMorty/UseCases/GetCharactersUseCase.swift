@@ -10,5 +10,5 @@ import Combine
 
 protocol GetCharactersUseCase {
     
-    func execute() -> AnyPublisher<[Character], Error>
+    func execute(page: Int) -> AnyPublisher<CharacterInformation, Error>
 }

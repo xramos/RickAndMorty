@@ -11,6 +11,7 @@ import Combine
 class CharacterRemoteDataSource {
     
     static let getCharactersURL: String = "/character"
+    static let getPage: String = "?page="
     private let baseURLString: String
     private let session: URLSession
     
@@ -20,12 +21,12 @@ class CharacterRemoteDataSource {
         self.session = session
     }
     
-    func getCharacters() -> AnyPublisher<ServerArrayResponse<ServerCharacter>, Error> {
+    func getCharacters(page: Int) -> AnyPublisher<ServerArrayResponse<ServerCharacter>, Error> {
         
         let manager = NetworkManager(baseURL: baseURLString,
                                      session: session)
         
-        let urlRequest = getCharactersEndpoint()
+        let urlRequest = getCharactersEndpoint(page: page)
         
         return manager.performRequest(urlRequest: urlRequest)
     }
@@ -34,9 +35,9 @@ class CharacterRemoteDataSource {
 
 extension CharacterRemoteDataSource {
     
-    func getCharactersEndpoint() -> URLRequest {
+    func getCharactersEndpoint(page: Int) -> URLRequest {
         
-        let endpoint = "\(baseURLString)\(CharacterRemoteDataSource.getCharactersURL)"
+        let endpoint = "\(baseURLString)\(CharacterRemoteDataSource.getCharactersURL)\(CharacterRemoteDataSource.getPage)\(page)"
         
         let url = URL(string: endpoint.filter { !$0.isWhitespace })
                 

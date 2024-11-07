@@ -19,47 +19,19 @@ struct CharacterListView: View {
             
         }.task {
             
-            viewModel.getCharacters()
+            if viewModel.characters.isEmpty {
+                
+                viewModel.getCharacters()
+            }
         }
     }
     
     @ViewBuilder
     var content: some View {
         
-        switch viewModel.state {
-        case .loading:
-            loadingView
-        case .failed:
-            failedView
-        case .loaded:
-            loadedView
-        }
-    }
-    
-    @ViewBuilder
-    var loadingView: some View {
-        
-        ProgressView()
-        
-        Text("Loading Characters")
-            .font(.caption)
-    }
-    
-    @ViewBuilder
-    var failedView: some View {
-        
-        Text("Ops, there has been some error")
-                
-        Button(action: { viewModel.getCharacters() },
-               label: { Text("Try again")})
-    }
-    
-    @ViewBuilder
-    var loadedView: some View {
-        
         ScrollView {
             
-            VStack {
+            LazyVStack {
                 
                 ForEach(viewModel.characters) { character in
                     
@@ -68,6 +40,13 @@ struct CharacterListView: View {
                         CharacterCellView(image: character.image,
                                           name: character.name,
                                           status: character.status.rawValue)
+                    }
+                    .onAppear {
+                        
+                        if viewModel.isLastCharacter(character: character) {
+                            
+                            viewModel.getNextCharacters()
+                        }
                     }
                 }
             }
