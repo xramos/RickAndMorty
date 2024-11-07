@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PreviewSnapshots
 
 struct CharacterDetailView: View {
     
@@ -19,48 +20,119 @@ struct CharacterDetailView: View {
         }
         .task {
             
-            // TODO: Get Location
+            viewModel.getLocations()
         }
     }
     
     @ViewBuilder
     var content: some View {
         
+        switch viewModel.state {
+        case .loading:
+            ProgressView()
+        case .loaded:
+            loadedView
+        }
+    }
+    
+    @ViewBuilder
+    var loadedView: some View {
+        
         VStack {
             
-            VStack {
+            characterSection
+            
+            if let location = viewModel.originLocation {
                 
-                NetworkImage(imageUrlString: viewModel.character.image)
+                Spacer().frame(maxHeight: 20)
                 
-                Text(viewModel.character.name)
-                    .font(.title)
-                
-                Divider()
-                    .background(Color.accentColor)
-                
-                VStack(spacing: 10) {
-                    
-                    TitleValueView(title: "Status:",
-                                   value: viewModel.character.status.rawValue)
-                    
-                    TitleValueView(title: "Species:",
-                                   value: viewModel.character.species)
-                    
-                    TitleValueView(title: "Type:",
-                                   value: viewModel.character.type)
-                    
-                    TitleValueView(title: "Gender:",
-                                   value: viewModel.character.gender.rawValue)
-                }
+                locationSection(locationName: "Origin Location",
+                                location: location)
             }
-            .padding(Constants.padding)
-            .background(Color.primaryContainer)
-            .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius, style: .continuous))
-            .shadow(color: Color.neutral, radius: Constants.radius)
+            
+            if let location = viewModel.lastLocation {
+                
+                Spacer().frame(maxHeight: 20)
+                
+                locationSection(locationName: "Last Known Location",
+                                location: location)
+            }
             
             Spacer()
         }
         .padding(Constants.padding)
+    }
+    
+    @ViewBuilder
+    var characterSection: some View {
+        
+        VStack {
+            
+            NetworkImage(imageUrlString: viewModel.character.image)
+            
+            Text(viewModel.character.name)
+                .font(.title)
+                .foregroundStyle(Color.secondaryMain)
+            
+            Divider()
+                .background(Color.accentColor)
+            
+            VStack(spacing: 10) {
+                
+                TitleValueView(title: "Status:",
+                               value: viewModel.character.status.rawValue)
+                
+                if !viewModel.character.species.isEmpty {
+                    TitleValueView(title: "Species:",
+                                   value: viewModel.character.species)
+                }
+                
+                if !viewModel.character.type.isEmpty {
+                    TitleValueView(title: "Type:",
+                                   value: viewModel.character.type)
+                }
+                
+                TitleValueView(title: "Gender:",
+                               value: viewModel.character.gender.rawValue)
+            }
+        }
+        .padding(Constants.padding)
+        .background(Color.primaryContainer)
+        .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius, style: .continuous))
+        .shadow(color: Color.neutral, radius: Constants.radius)
+    }
+    
+    @ViewBuilder
+    func locationSection(locationName: String, location: CharacterLocation) -> some View {
+        
+        VStack {
+            
+            Text(locationName)
+                .font(.title3)
+                .foregroundStyle(Color.secondaryMain)
+            
+            Divider()
+                .background(Color.accentColor)
+            
+            VStack(spacing: 10) {
+                
+                if !location.name.isEmpty {
+                    TitleValueView(title: "Name:", value: location.name)
+                }
+                
+                if !location.type.isEmpty {
+                    TitleValueView(title: "Type:", value: location.type)
+                }
+                
+                if !location.dimension.isEmpty {
+                    TitleValueView(title: "Dimension:", value: location.dimension)
+                }
+            }
+        }
+        .padding(Constants.padding)
+        .background(Color.primaryContainer)
+        .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius, style: .continuous))
+        .shadow(color: Color.neutral, radius: Constants.radius)
     }
 }
 
@@ -70,19 +142,26 @@ struct CharacterDetailView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        let character = Character(id: 1,
-                                  name: "Rick Sanchez",
-                                  status: .alive,
-                                  species: "Human",
-                                  type: "",
-                                  gender: .male,
-                                  image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-                                  originId: 1,
-                                  locationId: 1)
+        snapshots.previews.previewLayout(.sizeThatFits)
+    }
+    
+    static var snapshots: PreviewSnapshots<ColorScheme> {
         
-        ForEach(ColorScheme.allCases, id: \.self) {
-            CharacterDetailView(viewModel: CharacterDetailViewModel(character: character))
-                .preferredColorScheme($0)
-        }
+        PreviewSnapshots(configurations: [
+            .init(name: "Light", state: .light),
+            .init(name: "Dark", state: .dark)
+        ], configure: { state in
+            
+            CharacterDetailView(viewModel: CharacterDetailViewModel(character: Character(id: 1,
+                                                                                         name: "Rick Sanchez",
+                                                                                         status: .alive,
+                                                                                         species: "Human",
+                                                                                         type: "Genetic experiment",
+                                                                                         gender: .male,
+                                                                                         image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+                                                                                         originId: 1,
+                                                                                         locationId: 1)))
+            .preferredColorScheme(state)
+        })
     }
 }

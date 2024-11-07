@@ -32,7 +32,6 @@ extension CharacterRepositoryImplementation: CharacterRepository {
             for serverCharacter in serverCharacters.results {
                 
                 let character = serverCharacter.convertToEntity()
-                self.localDataSource.saveCharacter(character: character)
                 characters.append(character)
             }
             

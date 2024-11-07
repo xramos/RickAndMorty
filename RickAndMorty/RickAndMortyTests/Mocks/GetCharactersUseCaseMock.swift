@@ -18,6 +18,7 @@ class GetCharactersUseCaseMock: GetCharactersUseCase {
         
         isExecuteCalled = true
         
-        return Result.Publisher(CharacterInformation(pages: 1, characters: [])).eraseToAnyPublisher()
+        return Result.Publisher(CharacterInformation(pages: 1, characters: []))
+            .eraseToAnyPublisher()
     }
 }

@@ -39,5 +39,4 @@ final class CharacterListViewModelUnitTests: XCTestCase {
         // Then
         XCTAssertTrue(getCharactersUseCase.isExecuteCalled)
     }
-
 }
