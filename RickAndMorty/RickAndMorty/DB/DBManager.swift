@@ -29,6 +29,7 @@ extension DBManager: Persistence {
     func saveCharacter(character: Character) {
         
         let dbCharacter = DBCharacter(context: coreDataStack.managedContext)
+        
         dbCharacter.id = Int16(character.id)
         dbCharacter.name = character.name
         dbCharacter.status = character.status.rawValue
@@ -63,5 +64,64 @@ extension DBManager: Persistence {
         }
         
         return characters
+    }
+    
+    func saveLocation(location: CharacterLocation) {
+        
+        let dbLocation = DBCharacterLocation(context: coreDataStack.managedContext)
+        
+        dbLocation.id = Int16(location.id)
+        dbLocation.name = location.name
+        dbLocation.type = location.type
+        dbLocation.dimension = location.dimension
+        
+        coreDataStack.saveContext()
+    }
+    
+    func getLocations() -> [CharacterLocation] {
+        
+        var locations: [CharacterLocation] = []
+        
+        let fetchRequest = NSFetchRequest<DBCharacterLocation>(entityName: "DBCharacterLocation")
+        
+        do {
+            
+            let dbLocations = try coreDataStack.managedContext.fetch(fetchRequest)
+            
+            for dbLocation in dbLocations {
+                let location = dbLocation.convertToEntity()
+                locations.append(location)
+            }
+            
+        } catch let error as NSError {
+            
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        return locations
+    }
+    
+    func getLocationById(id: Int) -> CharacterLocation? {
+        
+        var location: CharacterLocation?
+        
+        let fetchRequest = NSFetchRequest<DBCharacterLocation>(entityName: "DBCharacterLocation")
+        fetchRequest.predicate = NSPredicate(format: "id == \(id)")
+        
+        do {
+            
+            let dbLocations = try coreDataStack.managedContext.fetch(fetchRequest)
+            
+            if let dbLocation = dbLocations.first {
+                
+                location = dbLocation.convertToEntity()
+            }
+            
+        } catch let error as NSError {
+            
+            print("Could not fetch location. \(error), \(error.userInfo)")
+        }
+        
+        return location
     }
 }

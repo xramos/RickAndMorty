@@ -39,4 +39,32 @@ final class CharacterLocalDataSourceUnitTests: XCTestCase {
         // Then
         XCTAssertEqual(response.count, 1)
     }
+    
+    func testSaveLocation() {
+        
+        // Given
+        let location = CharacterLocationMock().generateCharacterLocation()
+        
+        // When
+        sut.saveLocation(location: location)
+        let response = sut.getLocations()
+        
+        // Then
+        XCTAssertEqual(response.count, 1)
+    }
+    
+    func testGetLocationById() {
+        
+        // Given
+        let locationId = 3
+        let location = CharacterLocationMock().generateCharacterLocation(id: locationId)
+        
+        // When
+        sut.saveLocation(location: location)
+        let response = sut.getLocationById(id: locationId)
+        
+        // Then
+        XCTAssertNotNil(response)
+        XCTAssertEqual(response!.id, locationId)
+    }
 }

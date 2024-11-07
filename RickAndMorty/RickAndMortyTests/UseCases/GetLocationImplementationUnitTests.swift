@@ -27,7 +27,7 @@ final class GetLocationImplementationUnitTests: XCTestCase {
         sut = GetLocationUseCaseImplementation(repository: repository)
         
         // When
-        _ = sut.execute(locationId: 1)
+        _ = sut.execute(isForced: true, locationId: 1)
         
         // Then
         XCTAssertTrue(repository.isGetLocationCalled)

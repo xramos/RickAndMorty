@@ -42,15 +42,40 @@ extension CharacterRepositoryImplementation: CharacterRepository {
         .eraseToAnyPublisher()
     }
     
-    func getLocation(locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
+    func getLocation(isForced: Bool, locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
         
-        return remoteDataSource.getLocation(locationId: locationId).map { serverLocation -> CharacterLocation in
+        if isForced {
             
-            let location = serverLocation.convertToEntity()
-            
-            return location
+            //Remove Cache
+            remoteDataSource.removeGetLocationCache(locationId: locationId)
         }
-        .mapError({ $0 })
-        .eraseToAnyPublisher()
+        
+        if remoteDataSource.isGetLocationAvailable(locationId: locationId) {
+            
+            if let location = localDataSource.getLocationById(id: locationId) {
+                
+                return Result.Publisher(location).eraseToAnyPublisher()
+                
+            } else {
+                
+                // Try Again
+                return getLocation(isForced: true,
+                                   locationId: locationId)
+            }
+        } else {
+            
+            return remoteDataSource.getLocation(locationId: locationId).map { serverLocation -> CharacterLocation in
+                
+                let location = serverLocation.convertToEntity()
+                
+                self.localDataSource.saveLocation(location: location)
+                
+                self.remoteDataSource.addGetLocationCache(locationId: locationId)
+                
+                return location
+            }
+            .mapError({ $0 })
+            .eraseToAnyPublisher()
+        }
     }
 }

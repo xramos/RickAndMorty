@@ -14,7 +14,7 @@ class GetLocationUseCaseMock: GetLocationUseCase {
     
     var isExecuteCalled: Bool = false
     
-    func execute(locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
+    func execute(isForced: Bool, locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
         
         isExecuteCalled = true
         

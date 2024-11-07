@@ -12,5 +12,5 @@ protocol CharacterRepository {
     
     func getCharacters(page: Int) -> AnyPublisher<CharacterInformation, Error>
     
-    func getLocation(locationId: Int) -> AnyPublisher<CharacterLocation, Error>
+    func getLocation(isForced: Bool, locationId: Int) -> AnyPublisher<CharacterLocation, Error>
 }

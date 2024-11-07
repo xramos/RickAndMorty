@@ -24,4 +24,19 @@ class CharacterLocalDataSource {
         
         return dbManager.getCharacters()
     }
+    
+    func saveLocation(location: CharacterLocation) {
+        
+        dbManager.saveLocation(location: location)
+    }
+    
+    func getLocations() -> [CharacterLocation] {
+        
+        return dbManager.getLocations()
+    }
+    
+    func getLocationById(id: Int) -> CharacterLocation? {
+        
+        return dbManager.getLocationById(id: id)
+    }
 }
