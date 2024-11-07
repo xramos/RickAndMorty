@@ -13,10 +13,14 @@ class CharacterListViewModel: ObservableObject {
     
     let getCharactersUseCase: GetCharactersUseCase
     
-    @Published internal var state: State = .loading
     @Published public private(set) var characters: [Character] = []
     
     private var cancellable: AnyCancellable?
+    
+    private var currentPage = 1
+    
+    // Assumption: We have at least 1 page of information
+    private var totalPages = 1
     
     // MARK: - Methods
     
@@ -25,35 +29,36 @@ class CharacterListViewModel: ObservableObject {
         self.getCharactersUseCase = getCharactersUseCase
     }
     
-    func getCharacters() {
+    func getCharacters(page: Int = 1) {
         
-        state = .loading
-        
-        cancellable = getCharactersUseCase.execute()
+        cancellable = getCharactersUseCase.execute(page: page)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 
                 switch completion {
                 case .finished:
-                    self.state = .loaded
+                    break
                 case .failure(let error):
                     print("Error: \(error.localizedDescription)")
-                    self.state = .failed
                 }
                 
-            }, receiveValue: { (characters: [Character]) in
+            }, receiveValue: { (characterInformation: CharacterInformation) in
                 
-                self.characters = characters
+                self.totalPages = characterInformation.pages
+                self.characters.append(contentsOf: characterInformation.characters)
             })
     }
-}
-
-extension CharacterListViewModel {
     
-    enum State: Equatable {
+    func isLastCharacter(character: Character) -> Bool {
         
-        case loading
-        case failed
-        case loaded
+        return character == characters.last
+    }
+    
+    func getNextCharacters() {
+        
+        if currentPage < totalPages {
+            currentPage += 1
+            getCharacters(page: currentPage)
+        }
     }
 }
