@@ -14,7 +14,10 @@ struct RickAndMortyApp: App {
         
         WindowGroup {
             
-            CharacterListView()
+            NavigationView {
+                
+                CharacterListView()
+            }
         }
     }
 }

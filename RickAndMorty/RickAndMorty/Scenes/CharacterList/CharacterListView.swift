@@ -59,22 +59,19 @@ struct CharacterListView: View {
         
         List {
             
-            VStack(alignment: .leading) {
+            ForEach(viewModel.characters) { character in
                 
-                ForEach(viewModel.characters) { character in
+                NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(character: character))) {
                     
                     CharacterCellView(image: character.image,
                                       name: character.name,
                                       status: character.status.rawValue)
                 }
+                .padding([.leading, .trailing], Constants.padding)
+                .listRowSeparatorTint(.clear)
+                .listRowBackground(Color.clear)
             }
-            .padding([.top, .leading, .trailing], Constants.padding)
-            .padding(.bottom, Constants.padding)
-            .listRowSeparatorTint(.clear)
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets())
         }
-        .scrollContentBackground(.hidden)
         .listStyle(PlainListStyle())
     }
 }
