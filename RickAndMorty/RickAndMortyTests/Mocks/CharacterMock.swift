@@ -18,6 +18,8 @@ final class CharacterMock {
     let type = "Genetic experiment"
     let gender = "Male"
     let image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+    let originId = 1
+    let locationId = 1
     
     // MARK: - DBCharacter
     
@@ -27,17 +29,21 @@ final class CharacterMock {
                              species: String? = nil,
                              type: String? = nil,
                              gender: String? = nil,
-                             image: String? = nil) -> DBCharacter {
+                             image: String? = nil,
+                             originId: Int? = nil,
+                             locationId: Int? = nil) -> DBCharacter {
         
         let dbCharacter = DBCharacter(context: TestCoreDataStack().managedContext)
         
-        dbCharacter.id = Int32(id ?? self.id)
+        dbCharacter.id = Int16(id ?? self.id)
         dbCharacter.name = name ?? self.name
         dbCharacter.status = status ?? self.status
         dbCharacter.species = species ?? self.species
         dbCharacter.type = type ?? self.type
         dbCharacter.gender = gender ?? self.gender
         dbCharacter.image = image ?? self.image
+        dbCharacter.originId = Int16(originId ?? self.originId)
+        dbCharacter.locationId = Int16(locationId ?? self.locationId)
         
         return dbCharacter
     }
@@ -50,7 +56,9 @@ final class CharacterMock {
                            species: String? = nil,
                            type: String? = nil,
                            gender: Gender? = nil,
-                           image: String? = nil) -> Character {
+                           image: String? = nil,
+                           originId: Int? = nil,
+                           locationId: Int? = nil) -> Character {
         
         return Character(id: id ?? self.id,
                          name: name ?? self.name,
@@ -58,7 +66,9 @@ final class CharacterMock {
                          species: species ?? self.species,
                          type: type ?? self.type,
                          gender: gender ?? .unknown,
-                         image: image ?? self.image)
+                         image: image ?? self.image,
+                         originId: originId ?? self.originId,
+                         locationId: locationId ?? self.locationId)
     }
     
     // MARK: - ServerCharacter
@@ -69,7 +79,21 @@ final class CharacterMock {
                                  species: String? = nil,
                                  type: String? = nil,
                                  gender: String? = nil,
-                                 image: String? = nil) -> ServerCharacter {
+                                 image: String? = nil,
+                                 originId: Int? = nil,
+                                 locationId: Int? = nil) -> ServerCharacter {
+        
+        let origin = ServerCharacterLocation(id: originId ?? self.originId,
+                                             name: "",
+                                             url: "",
+                                             type: "",
+                                             dimension: "")
+        
+        let location = ServerCharacterLocation(id: locationId ?? self.locationId,
+                                               name: "",
+                                               url: "",
+                                               type: "",
+                                               dimension: "")
         
         return ServerCharacter(id: id ?? self.id,
                                name: name ?? self.name,
@@ -77,6 +101,8 @@ final class CharacterMock {
                                species: species ?? self.species,
                                type: type ?? self.type,
                                gender: gender ?? self.gender,
-                               image: image ?? self.image)
+                               image: image ?? self.image,
+                               origin: origin,
+                               location: location)
     }
 }

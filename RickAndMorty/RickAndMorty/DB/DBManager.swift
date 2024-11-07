@@ -29,13 +29,15 @@ extension DBManager: Persistence {
     func saveCharacter(character: Character) {
         
         let dbCharacter = DBCharacter(context: coreDataStack.managedContext)
-        dbCharacter.id = Int32(character.id)
+        dbCharacter.id = Int16(character.id)
         dbCharacter.name = character.name
         dbCharacter.status = character.status.rawValue
         dbCharacter.species = character.species
         dbCharacter.type = character.type
         dbCharacter.gender = character.gender.rawValue
         dbCharacter.image = character.image
+        dbCharacter.originId = Int16(character.originId)
+        dbCharacter.locationId = Int16(character.locationId)
         
         coreDataStack.saveContext()
     }

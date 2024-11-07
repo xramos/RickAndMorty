@@ -16,4 +16,6 @@ struct Character: Identifiable, Equatable, Hashable {
     let type: String
     let gender: Gender
     let image: String
+    let originId: Int
+    let locationId: Int
 }

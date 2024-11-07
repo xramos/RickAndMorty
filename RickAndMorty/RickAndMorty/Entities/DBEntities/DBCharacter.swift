@@ -17,6 +17,8 @@ extension DBCharacter {
                          species: species ?? "",
                          type: type ?? "",
                          gender: Gender(rawValue: gender ?? "") ?? .unknown,
-                         image: image ?? "")
+                         image: image ?? "",
+                         originId: Int(originId),
+                         locationId: Int(locationId))
     }
 }
