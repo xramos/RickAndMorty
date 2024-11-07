@@ -14,10 +14,10 @@ class GetCharactersUseCaseMock: GetCharactersUseCase {
     
     var isExecuteCalled: Bool = false
     
-    func execute() -> AnyPublisher<[Character], any Error> {
+    func execute(page: Int) -> AnyPublisher<CharacterInformation, any Error> {
         
         isExecuteCalled = true
         
-        return Result.Publisher([]).eraseToAnyPublisher()
+        return Result.Publisher(CharacterInformation(pages: 1, characters: [])).eraseToAnyPublisher()
     }
 }

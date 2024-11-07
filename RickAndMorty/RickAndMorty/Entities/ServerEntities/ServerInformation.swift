@@ -9,6 +9,5 @@ import Foundation
 
 struct ServerInformation: Codable {
     
-    let count: Int
     let pages: Int
 }

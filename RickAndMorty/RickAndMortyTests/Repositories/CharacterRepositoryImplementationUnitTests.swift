@@ -35,7 +35,8 @@ extension CharacterRepositoryImplementationUnitTests {
     func testGetCharactersOK() {
         
         // Given
-        let session = getCharacterSession(statusCode: sucessStatusCode)
+        let page = 1
+        let session = getCharacterSession(statusCode: sucessStatusCode, page: page)
         
         let remote = CharacterRemoteDataSource(baseURL: Constants.testBaseURL,
                                                session: session)
@@ -48,7 +49,7 @@ extension CharacterRepositoryImplementationUnitTests {
         let exp = expectation(description: "expected characters")
         
         // When
-        cancellable = sut.getCharacters().sink(receiveCompletion: { completion in
+        cancellable = sut.getCharacters(page: page).sink(receiveCompletion: { completion in
             
             switch completion {
             case .finished:
@@ -57,18 +58,19 @@ extension CharacterRepositoryImplementationUnitTests {
                 break
             }
             
-        }, receiveValue: { characters in
+        }, receiveValue: { characterInformation in
           
-            XCTAssertNotNil(characters)
+            XCTAssertNotNil(characterInformation)
+            XCTAssertEqual(characterInformation.pages, 42)
             
-            XCTAssertEqual(characters.count, 1)
-            XCTAssertEqual(characters[0].id, 1)
-            XCTAssertEqual(characters[0].name, "Rick")
-            XCTAssertEqual(characters[0].status.rawValue, "Alive")
-            XCTAssertEqual(characters[0].species, "Human")
-            XCTAssertEqual(characters[0].type, "Genetic experiment")
-            XCTAssertEqual(characters[0].gender.rawValue, "Male")
-            XCTAssertEqual(characters[0].image, "character image")
+            XCTAssertEqual(characterInformation.characters.count, 1)
+            XCTAssertEqual(characterInformation.characters[0].id, 1)
+            XCTAssertEqual(characterInformation.characters[0].name, "Rick")
+            XCTAssertEqual(characterInformation.characters[0].status.rawValue, "Alive")
+            XCTAssertEqual(characterInformation.characters[0].species, "Human")
+            XCTAssertEqual(characterInformation.characters[0].type, "Genetic experiment")
+            XCTAssertEqual(characterInformation.characters[0].gender.rawValue, "Male")
+            XCTAssertEqual(characterInformation.characters[0].image, "character image")
         })
         
         wait(for: [exp], timeout: timeoutTime)
@@ -80,7 +82,8 @@ extension CharacterRepositoryImplementationUnitTests {
     func testGetCharactersError() {
         
         // Given
-        let session = getCharacterSession(statusCode: failureStatusCode)
+        let page = 1
+        let session = getCharacterSession(statusCode: failureStatusCode, page: page)
         
         let remote = CharacterRemoteDataSource(baseURL: Constants.testBaseURL,
                                                session: session)
@@ -93,7 +96,7 @@ extension CharacterRepositoryImplementationUnitTests {
         let exp = expectation(description: "expected characters")
         
         // When
-        cancellable = sut.getCharacters().sink(receiveCompletion: { completion in
+        cancellable = sut.getCharacters(page: page).sink(receiveCompletion: { completion in
             
             switch completion {
             case .finished:
@@ -116,10 +119,10 @@ extension CharacterRepositoryImplementationUnitTests {
 
 extension CharacterRepositoryImplementationUnitTests {
     
-    func getCharacterSession(statusCode: Int) -> URLSession {
+    func getCharacterSession(statusCode: Int, page: Int) -> URLSession {
         
         // URL we expect to call
-        let url = URL(string: "\(Constants.testBaseURL)/character")
+        let url = URL(string: "\(Constants.testBaseURL)/character?page=\(page)")
         
         // Data we expect to recieve
         let data = getCharacterData()
@@ -145,6 +148,9 @@ extension CharacterRepositoryImplementationUnitTests {
         
         let dataString = """
                     {
+                        "info": {
+                            "pages": 42
+                        },
                         "results":[
                             {
                                 "id": 1,

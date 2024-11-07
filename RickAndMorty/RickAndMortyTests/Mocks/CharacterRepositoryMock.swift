@@ -14,10 +14,10 @@ class CharacterRepositoryMock: CharacterRepository {
     
     var isGetCharactersCalled: Bool = false
     
-    func getCharacters() -> AnyPublisher<[Character], any Error> {
+    func getCharacters(page: Int) -> AnyPublisher<CharacterInformation, any Error> {
         
         isGetCharactersCalled = true
         
-        return Result.Publisher([]).eraseToAnyPublisher()
+        return Result.Publisher(CharacterInformation(pages: 1, characters: [])).eraseToAnyPublisher()
     }
 }
