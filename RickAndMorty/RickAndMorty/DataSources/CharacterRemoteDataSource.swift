@@ -12,6 +12,9 @@ class CharacterRemoteDataSource {
     
     static let getCharactersURL: String = "/character"
     static let getPage: String = "?page="
+    
+    static let getLocationURL: String = "/location"
+    
     private let baseURLString: String
     private let session: URLSession
     
@@ -30,6 +33,16 @@ class CharacterRemoteDataSource {
         
         return manager.performRequest(urlRequest: urlRequest)
     }
+    
+    func getLocation(locationId: Int) -> AnyPublisher<ServerCharacterLocation, Error> {
+        
+        let manager = NetworkManager(baseURL: baseURLString,
+                                     session: session)
+        
+        let urlRequest = getLocationEndpoint(locationId: locationId)
+        
+        return manager.performRequest(urlRequest: urlRequest)
+    }
 }
 
 
@@ -38,6 +51,17 @@ extension CharacterRemoteDataSource {
     func getCharactersEndpoint(page: Int) -> URLRequest {
         
         let endpoint = "\(baseURLString)\(CharacterRemoteDataSource.getCharactersURL)\(CharacterRemoteDataSource.getPage)\(page)"
+        
+        let url = URL(string: endpoint.filter { !$0.isWhitespace })
+                
+        let urlRequest = URLRequest(url: url!)
+                
+        return urlRequest
+    }
+    
+    func getLocationEndpoint(locationId: Int) -> URLRequest {
+
+        let endpoint = "\(baseURLString)\(CharacterRemoteDataSource.getLocationURL)/\(locationId)"
         
         let url = URL(string: endpoint.filter { !$0.isWhitespace })
                 

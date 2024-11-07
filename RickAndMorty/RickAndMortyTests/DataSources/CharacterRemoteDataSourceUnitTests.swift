@@ -39,4 +39,17 @@ final class CharacterRemoteDataSourceUnitTests: XCTestCase {
         XCTAssertNotNil(response)
         XCTAssertEqual(response.url?.absoluteString, "\(Constants.testBaseURL)/character?page=\(page)")
     }
+    
+    func testGetCharacterLocationEndpoint() {
+        
+        // Given
+        let locationId = 1
+        
+        // When
+        let response = sut.getLocationEndpoint(locationId: locationId)
+        
+        // Then
+        XCTAssertNotNil(response)
+        XCTAssertEqual(response.url?.absoluteString, "\(Constants.testBaseURL)/location/\(locationId)")
+    }
 }

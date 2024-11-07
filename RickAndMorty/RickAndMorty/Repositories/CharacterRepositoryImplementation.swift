@@ -32,12 +32,23 @@ extension CharacterRepositoryImplementation: CharacterRepository {
             for serverCharacter in serverCharacters.results {
                 
                 let character = serverCharacter.convertToEntity()
-                self.localDataSource.saveCharacter(character: character)
                 characters.append(character)
             }
             
             return CharacterInformation(pages: serverCharacters.info.pages,
                                         characters: characters)
+        }
+        .mapError({ $0 })
+        .eraseToAnyPublisher()
+    }
+    
+    func getLocation(locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
+        
+        return remoteDataSource.getLocation(locationId: locationId).map { serverLocation -> CharacterLocation in
+            
+            let location = serverLocation.convertToEntity()
+            
+            return location
         }
         .mapError({ $0 })
         .eraseToAnyPublisher()

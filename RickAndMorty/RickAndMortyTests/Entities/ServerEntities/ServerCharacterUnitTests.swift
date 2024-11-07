@@ -20,6 +20,7 @@ final class ServerCharacterUnitTests: XCTestCase {
         let character = serverCharacter.convertToEntity()
         
         // Then
+        XCTAssertNotNil(character)
         XCTAssertEqual(character.id, serverCharacter.id)
         XCTAssertEqual(character.name, serverCharacter.name)
         XCTAssertEqual(character.status.rawValue, serverCharacter.status)
