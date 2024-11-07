@@ -37,19 +37,6 @@ struct TitleValueView: View {
 
 // MARK: - Previews
 
-struct TitleValueViews_ColorScheme_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        
-        ForEach(ColorScheme.allCases, id: \.self) {
-            
-            TitleValueView(title: "Gender",
-                           value: "Unknown")
-            .preferredColorScheme($0)
-        }
-    }
-}
-
 struct TitleValueView_Previews: PreviewProvider {
     
     static var previews: some View {
@@ -57,14 +44,16 @@ struct TitleValueView_Previews: PreviewProvider {
         snapshots.previews.previewLayout(.sizeThatFits)
     }
     
-    static var snapshots: PreviewSnapshots<String> {
-        
+    static var snapshots: PreviewSnapshots<ColorScheme> {
+                
         PreviewSnapshots(configurations: [
-            .init(name: "Default", state: "")
+            .init(name: "Light", state: .light),
+            .init(name: "Dark", state: .dark)
         ], configure: { state in
             
             TitleValueView(title: "Gender",
                            value: "Unknown")
+            .preferredColorScheme(state)
         })
     }
 }

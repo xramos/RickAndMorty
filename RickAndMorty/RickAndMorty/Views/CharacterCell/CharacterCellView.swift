@@ -51,20 +51,6 @@ struct CharacterCellView: View {
 
 // MARK: - Previews
 
-struct CharacterCellView_ColorScheme_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        
-        ForEach(ColorScheme.allCases, id: \.self) {
-            
-            CharacterCellView(image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-                              name: "Rick Sanchez",
-                              status: "Alive")
-            .preferredColorScheme($0)
-        }
-    }
-}
-
 struct CharacterCellView_Previews: PreviewProvider {
     
     static var previews: some View {
@@ -72,15 +58,17 @@ struct CharacterCellView_Previews: PreviewProvider {
         snapshots.previews.previewLayout(.sizeThatFits)
     }
     
-    static var snapshots: PreviewSnapshots<String> {
+    static var snapshots: PreviewSnapshots<ColorScheme> {
         
         PreviewSnapshots(configurations: [
-            .init(name: "Default", state: "")
+            .init(name: "Light", state: .light),
+            .init(name: "Dark", state: .dark)
         ], configure: { state in
             
             CharacterCellView(image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
                               name: "Rick Sanchez",
                               status: "Alive")
+            .preferredColorScheme(state)
         })
     }
 }
