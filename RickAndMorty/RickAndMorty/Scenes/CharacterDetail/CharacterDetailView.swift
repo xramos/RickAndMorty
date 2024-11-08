@@ -38,29 +38,32 @@ struct CharacterDetailView: View {
     @ViewBuilder
     var loadedView: some View {
         
-        VStack {
+        ScrollView {
             
-            characterSection
-            
-            if let location = viewModel.originLocation {
+            VStack {
                 
-                Spacer().frame(maxHeight: 20)
+                characterSection
                 
-                locationSection(locationName: "Origin Location",
-                                location: location)
+                if let location = viewModel.originLocation {
+                    
+                    Spacer().frame(maxHeight: 20)
+                    
+                    locationSection(locationName: "Born Location",
+                                    location: location)
+                }
+                
+                if let location = viewModel.lastLocation {
+                    
+                    Spacer().frame(maxHeight: 20)
+                    
+                    locationSection(locationName: "Last Known Location",
+                                    location: location)
+                }
+                
+                Spacer()
             }
-            
-            if let location = viewModel.lastLocation {
-                
-                Spacer().frame(maxHeight: 20)
-                
-                locationSection(locationName: "Last Known Location",
-                                location: location)
-            }
-            
-            Spacer()
+            .padding(Constants.padding)
         }
-        .padding(Constants.padding)
     }
     
     @ViewBuilder
@@ -73,27 +76,28 @@ struct CharacterDetailView: View {
             Text(viewModel.character.name)
                 .font(.title)
                 .foregroundStyle(Color.secondaryMain)
+                .accessibilityIdentifier("CharacterName")
             
             Divider()
                 .background(Color.accentColor)
             
             VStack(spacing: 10) {
                 
-                TitleValueView(title: "Status:",
+                TitleValueView(title: "Gender",
+                               value: viewModel.character.gender.rawValue)
+                
+                TitleValueView(title: "Status",
                                value: viewModel.character.status.rawValue)
                 
                 if !viewModel.character.species.isEmpty {
-                    TitleValueView(title: "Species:",
+                    TitleValueView(title: "Species",
                                    value: viewModel.character.species)
                 }
                 
                 if !viewModel.character.type.isEmpty {
-                    TitleValueView(title: "Type:",
+                    TitleValueView(title: "Type",
                                    value: viewModel.character.type)
                 }
-                
-                TitleValueView(title: "Gender:",
-                               value: viewModel.character.gender.rawValue)
             }
         }
         .padding(Constants.padding)
@@ -117,15 +121,15 @@ struct CharacterDetailView: View {
             VStack(spacing: 10) {
                 
                 if !location.name.isEmpty {
-                    TitleValueView(title: "Name:", value: location.name)
+                    TitleValueView(title: "Name", value: location.name)
                 }
                 
                 if !location.type.isEmpty {
-                    TitleValueView(title: "Type:", value: location.type)
+                    TitleValueView(title: "Type", value: location.type)
                 }
                 
                 if !location.dimension.isEmpty {
-                    TitleValueView(title: "Dimension:", value: location.dimension)
+                    TitleValueView(title: "Dimension", value: location.dimension)
                 }
             }
         }
