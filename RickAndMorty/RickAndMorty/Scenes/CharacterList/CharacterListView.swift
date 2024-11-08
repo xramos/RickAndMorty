@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PreviewSnapshots
 
 struct CharacterListView: View {
     
@@ -61,9 +62,17 @@ struct CharacterListView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        ForEach(ColorScheme.allCases, id: \.self) {
+        snapshots.previews.previewLayout(.sizeThatFits)
+    }
+    
+    static var snapshots: PreviewSnapshots<ColorScheme> {
+        
+        PreviewSnapshots(configurations: [
+            .init(name: "Light", state: .light),
+            .init(name: "Dark", state: .dark)
+        ], configure: { state in
             CharacterListView()
-                .preferredColorScheme($0)
-        }
+                .preferredColorScheme(state)
+        })
     }
 }
