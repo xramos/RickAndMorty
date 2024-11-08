@@ -76,6 +76,7 @@ struct CharacterDetailView: View {
             Text(viewModel.character.name)
                 .font(.title)
                 .foregroundStyle(Color.secondaryMain)
+                .accessibilityIdentifier("CharacterName")
             
             Divider()
                 .background(Color.accentColor)

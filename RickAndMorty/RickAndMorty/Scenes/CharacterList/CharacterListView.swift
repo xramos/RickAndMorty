@@ -42,6 +42,7 @@ struct CharacterListView: View {
                                           name: character.name,
                                           status: character.status.rawValue)
                     }
+                    .accessibilityIdentifier("CharacterCell_\(character.id)")
                     .onAppear {
                         
                         if viewModel.isLastCharacter(character: character) {
@@ -53,6 +54,7 @@ struct CharacterListView: View {
             }
             .padding()
         }
+        .accessibilityIdentifier("CharacterScrollView")
     }
 }
 
