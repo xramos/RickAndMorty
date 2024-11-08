@@ -11,5 +11,5 @@ enum CharacterStatus: String {
     
     case alive = "Alive"
     case dead = "Dead"
-    case unknown = "unknown"
+    case unknown = "Unknown"
 }
