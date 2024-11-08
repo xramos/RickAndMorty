@@ -35,7 +35,7 @@ final class RickAndMortyUITests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         let scrollView = app.scrollViews["CharacterScrollView"]
  
-        XCTAssertTrue(scrollView.waitForExistence(timeout: 5))
+        XCTAssertTrue(scrollView.waitForExistence(timeout: 2))
         
         let cell = scrollView.descendants(matching: .any)["CharacterCell_1"]
         
