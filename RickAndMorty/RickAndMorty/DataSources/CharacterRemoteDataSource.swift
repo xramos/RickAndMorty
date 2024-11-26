@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class CharacterRemoteDataSource {
+final class CharacterRemoteDataSource {
     
     static let getCharactersURL: String = "/character"
     static let getPage: String = "?page="

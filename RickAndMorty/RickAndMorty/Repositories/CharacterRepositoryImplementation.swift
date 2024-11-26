@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class CharacterRepositoryImplementation {
+final class CharacterRepositoryImplementation {
     
     private let localDataSource: CharacterLocalDataSource
     private let remoteDataSource: CharacterRemoteDataSource

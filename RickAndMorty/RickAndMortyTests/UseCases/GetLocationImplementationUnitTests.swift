@@ -20,7 +20,7 @@ final class GetLocationImplementationUnitTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func testIsCalled() {
+    func testIsGetLocationCalled() {
      
         // Given
         let repository = CharacterRepositoryMock()

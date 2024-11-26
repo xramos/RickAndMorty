@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class DBManager {
+final class DBManager {
     
     // MARK: - Properties
     

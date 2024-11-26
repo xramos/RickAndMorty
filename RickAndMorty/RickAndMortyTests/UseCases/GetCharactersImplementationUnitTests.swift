@@ -20,7 +20,7 @@ final class GetCharactersImplementationUnitTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func testIsCalled() {
+    func testIsGetCharactersCalled() {
      
         // Given
         let repository = CharacterRepositoryMock()
