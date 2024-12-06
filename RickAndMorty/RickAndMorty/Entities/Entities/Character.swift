@@ -18,4 +18,16 @@ struct Character: Identifiable, Equatable, Hashable {
     let image: String
     let originId: Int
     let locationId: Int
+    
+    static func ==(lhs: Character, rhs: Character) -> Bool {
+        return lhs.id == rhs.id &&
+        lhs.name == rhs.name &&
+        lhs.status.rawValue == rhs.status.rawValue &&
+        lhs.species == rhs.species &&
+        lhs.type == rhs.type &&
+        lhs.gender.rawValue == rhs.gender.rawValue &&
+        lhs.image == rhs.image &&
+        lhs.originId == rhs.originId &&
+        lhs.locationId == rhs.locationId
+    }
 }

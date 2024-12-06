@@ -7,10 +7,17 @@
 
 import Foundation
 
-struct CharacterLocation {
+struct CharacterLocation: Equatable {
     
     let id: Int
     let name: String
     let type: String
     let dimension: String
+    
+    static func ==(lhs: CharacterLocation, rhs: CharacterLocation) -> Bool {
+        return lhs.id == rhs.id &&
+        lhs.name == rhs.name &&
+        lhs.type == rhs.type &&
+        lhs.dimension == rhs.dimension
+    }
 }

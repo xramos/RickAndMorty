@@ -66,15 +66,17 @@ extension CharacterRepositoryImplementationUnitTests {
             
             XCTAssertEqual(characterInformation.characters.count, 1)
             
-            XCTAssertEqual(characterInformation.characters[0].id, 1)
-            XCTAssertEqual(characterInformation.characters[0].name, "Rick")
-            XCTAssertEqual(characterInformation.characters[0].status.rawValue, "Alive")
-            XCTAssertEqual(characterInformation.characters[0].species, "Human")
-            XCTAssertEqual(characterInformation.characters[0].type, "Genetic experiment")
-            XCTAssertEqual(characterInformation.characters[0].gender.rawValue, "Male")
-            XCTAssertEqual(characterInformation.characters[0].image, "character image")
-            XCTAssertEqual(characterInformation.characters[0].originId, 1)
-            XCTAssertEqual(characterInformation.characters[0].locationId, 20)
+            let testCharacter = Character(id: 1,
+                                          name: "Rick",
+                                          status: .alive,
+                                          species: "Human",
+                                          type: "Genetic experiment",
+                                          gender: .male,
+                                          image: "character image",
+                                          originId: 1,
+                                          locationId: 20)
+            
+            XCTAssertEqual(characterInformation.characters[0], testCharacter)
         })
         
         wait(for: [exp], timeout: timeoutTime)
