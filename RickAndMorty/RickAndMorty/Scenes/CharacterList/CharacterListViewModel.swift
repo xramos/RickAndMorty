@@ -17,7 +17,7 @@ protocol CharacterListViewModelContract {
     func getNextCharacters()
 }
 
-class CharacterListViewModel: ObservableObject {
+class CharacterListViewModel {
     
     let getCharactersUseCase: GetCharactersUseCaseContract
     
