@@ -8,7 +8,25 @@
 import Foundation
 import Combine
 
-protocol GetLocationUseCase {
-    
+protocol GetLocationUseCaseContract {
     func execute(isForced: Bool, locationId: Int) -> AnyPublisher<CharacterLocation, Error>
+}
+
+final class GetLocationUseCase {
+    
+    private let repository: CharacterRepositoryContract
+    
+    init(repository: CharacterRepositoryContract = CharacterRepository()) {
+        
+        self.repository = repository
+    }
+}
+
+extension GetLocationUseCase: GetLocationUseCaseContract {
+    
+    func execute(isForced: Bool, locationId: Int) -> AnyPublisher<CharacterLocation, any Error> {
+        
+        return repository.getLocation(isForced: isForced,
+                                      locationId: locationId)
+    }
 }

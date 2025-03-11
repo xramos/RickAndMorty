@@ -7,6 +7,15 @@
 
 import Foundation
 
+protocol CharacterLocalDataSourceContract {
+    
+    func saveCharacter(character: Character)
+    func getCharacters() -> [Character]
+    func saveLocation(location: CharacterLocation)
+    func getLocations() -> [CharacterLocation]
+    func getLocationById(id: Int) -> CharacterLocation?
+}
+
 class CharacterLocalDataSource {
     
     private let dbManager: Persistence
@@ -14,6 +23,9 @@ class CharacterLocalDataSource {
     init(dbManager: Persistence = DBManager()) {
         self.dbManager = dbManager
     }
+}
+
+extension CharacterLocalDataSource: CharacterLocalDataSourceContract {
     
     func saveCharacter(character: Character) {
         

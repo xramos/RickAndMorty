@@ -8,6 +8,17 @@
 import Foundation
 import Combine
 
+protocol CharacterRemoteDataSourceCacheContract {
+    func isGetLocationAvailable(locationId: Int) -> Bool
+    func addGetLocationCache(locationId: Int)
+    func removeGetLocationCache(locationId: Int)
+}
+
+protocol CharacterRemoteDataSourceContract: CharacterRemoteDataSourceCacheContract {
+    func getCharacters(page: Int) -> AnyPublisher<ServerArrayResponse<ServerCharacter>, Error>
+    func getLocation(locationId: Int) -> AnyPublisher<ServerCharacterLocation, Error>
+}
+
 final class CharacterRemoteDataSource {
     
     static let getCharactersURL: String = "/character"
@@ -30,6 +41,9 @@ final class CharacterRemoteDataSource {
         self.session = session
         self.cache = cache
     }
+}
+
+extension CharacterRemoteDataSource: CharacterRemoteDataSourceContract {
     
     func getCharacters(page: Int) -> AnyPublisher<ServerArrayResponse<ServerCharacter>, Error> {
         
@@ -81,7 +95,7 @@ extension CharacterRemoteDataSource {
 
 // MARK: - Cache
 
-extension CharacterRemoteDataSource {
+extension CharacterRemoteDataSource: CharacterRemoteDataSourceCacheContract {
     
     func isGetLocationAvailable(locationId: Int) -> Bool {
         

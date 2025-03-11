@@ -9,9 +9,17 @@ import Foundation
 import SwiftUI
 import Combine
 
+protocol CharacterListViewModelContract {
+    var charactersPublisher: AnyPublisher<[Character], Never> { get }
+    
+    func getCharacters(page: Int)
+    func isLastCharacter(character: Character) -> Bool
+    func getNextCharacters()
+}
+
 class CharacterListViewModel: ObservableObject {
     
-    let getCharactersUseCase: GetCharactersUseCase
+    let getCharactersUseCase: GetCharactersUseCaseContract
     
     @Published public private(set) var characters: [Character] = []
     
@@ -22,14 +30,19 @@ class CharacterListViewModel: ObservableObject {
     // Assumption: We have at least 1 page of information
     private var totalPages = 1
     
-    // MARK: - Methods
-    
-    init(getCharactersUseCase: GetCharactersUseCase = GetCharactersUseCaseImplementation()) {
+    init(getCharactersUseCase: GetCharactersUseCaseContract = GetCharactersUseCase()) {
         
         self.getCharactersUseCase = getCharactersUseCase
     }
+}
+
+extension CharacterListViewModel: CharacterListViewModelContract {
     
-    func getCharacters(page: Int = 1) {
+    var charactersPublisher: AnyPublisher<[Character], Never> {
+        $characters.eraseToAnyPublisher()
+    }
+    
+    func getCharacters(page: Int) {
         
         cancellable = getCharactersUseCase.execute(page: page)
             .receive(on: DispatchQueue.main)

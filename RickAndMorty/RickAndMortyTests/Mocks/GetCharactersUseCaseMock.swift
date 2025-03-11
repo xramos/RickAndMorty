@@ -10,7 +10,7 @@ import Combine
 
 @testable import RickAndMorty
 
-class GetCharactersUseCaseMock: GetCharactersUseCase {
+class GetCharactersUseCaseMock: GetCharactersUseCaseContract {
     
     var isExecuteCalled: Bool = false
     

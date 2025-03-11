@@ -10,7 +10,7 @@ import Combine
 
 @testable import RickAndMorty
 
-class GetLocationUseCaseMock: GetLocationUseCase {
+class GetLocationUseCaseMock: GetLocationUseCaseContract {
     
     var isExecuteCalled: Bool = false
     

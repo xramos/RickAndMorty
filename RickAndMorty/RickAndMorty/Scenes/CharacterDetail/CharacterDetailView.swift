@@ -10,7 +10,12 @@ import PreviewSnapshots
 
 struct CharacterDetailView: View {
     
-    @StateObject var viewModel: CharacterDetailViewModel
+    var viewModel: CharacterDetailViewModelContract
+    
+    @State var isLoading: Bool = true
+    @State var character: Character?
+    @State var originLocation: CharacterLocation?
+    @State var lastLocation: CharacterLocation?
     
     var body: some View {
         
@@ -21,16 +26,24 @@ struct CharacterDetailView: View {
         .task {
             
             viewModel.getLocations()
+            
+        }.onReceive(viewModel.isLoadingPublisher) {
+            isLoading = $0
+        }.onReceive(viewModel.characterPublisher) {
+            character = $0
+        }.onReceive(viewModel.originLocationPublisher) {
+            originLocation = $0
+        }.onReceive(viewModel.lastLocationPublisher) {
+            lastLocation = $0
         }
     }
     
     @ViewBuilder
     var content: some View {
         
-        switch viewModel.state {
-        case .loading:
+        if isLoading {
             ProgressView()
-        case .loaded:
+        } else {
             loadedView
         }
     }
@@ -44,7 +57,7 @@ struct CharacterDetailView: View {
                 
                 characterSection
                 
-                if let location = viewModel.originLocation {
+                if let location = originLocation {
                     
                     Spacer().frame(maxHeight: 20)
                     
@@ -52,7 +65,7 @@ struct CharacterDetailView: View {
                                     location: location)
                 }
                 
-                if let location = viewModel.lastLocation {
+                if let location = lastLocation {
                     
                     Spacer().frame(maxHeight: 20)
                     
@@ -71,32 +84,40 @@ struct CharacterDetailView: View {
         
         VStack {
             
-            NetworkImage(imageUrlString: viewModel.character.image)
+            if let image = character?.image {
+                NetworkImage(imageUrlString: image)
+            }
             
-            Text(viewModel.character.name)
-                .font(.title)
-                .foregroundStyle(Color.secondaryMain)
-                .accessibilityIdentifier("CharacterName")
+            if let name = character?.name {
+                Text(name)
+                    .font(.title)
+                    .foregroundStyle(Color.secondaryMain)
+                    .accessibilityIdentifier("CharacterName")
+            }
             
             Divider()
                 .background(Color.accentColor)
             
             VStack(spacing: 10) {
                 
-                TitleValueView(title: "Gender",
-                               value: viewModel.character.gender.rawValue)
-                
-                TitleValueView(title: "Status",
-                               value: viewModel.character.status.rawValue)
-                
-                if !viewModel.character.species.isEmpty {
-                    TitleValueView(title: "Species",
-                                   value: viewModel.character.species)
+                if let gender = character?.gender.rawValue {
+                    TitleValueView(title: "Gender",
+                                   value: gender)
                 }
                 
-                if !viewModel.character.type.isEmpty {
+                if let status = character?.status.rawValue {
+                    TitleValueView(title: "Status",
+                                   value: status)
+                }
+                
+                if let species = character?.species, !species.isEmpty {
+                    TitleValueView(title: "Species",
+                                   value: species)
+                }
+                
+                if let type = character?.type, !type.isEmpty {
                     TitleValueView(title: "Type",
-                                   value: viewModel.character.type)
+                                   value: type)
                 }
             }
         }

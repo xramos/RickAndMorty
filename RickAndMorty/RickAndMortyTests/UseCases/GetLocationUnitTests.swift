@@ -1,5 +1,5 @@
 //
-//  GetLocationImplementationUnitTests.swift
+//  GetLocationUnitTests.swift
 //  RickAndMortyTests
 //
 //  Created by Xavier Ramos Sole on 7/11/24.
@@ -9,7 +9,7 @@ import XCTest
 
 @testable import RickAndMorty
 
-final class GetLocationImplementationUnitTests: XCTestCase {
+final class GetLocationUnitTests: XCTestCase {
 
     var sut: GetLocationUseCase!
     
@@ -24,7 +24,7 @@ final class GetLocationImplementationUnitTests: XCTestCase {
      
         // Given
         let repository = CharacterRepositoryMock()
-        sut = GetLocationUseCaseImplementation(repository: repository)
+        sut = GetLocationUseCase(repository: repository)
         
         // When
         _ = sut.execute(isForced: true, locationId: 1)

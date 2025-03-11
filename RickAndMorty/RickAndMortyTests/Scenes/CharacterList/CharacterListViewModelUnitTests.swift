@@ -34,7 +34,7 @@ final class CharacterListViewModelUnitTests: XCTestCase {
         sut = CharacterListViewModel(getCharactersUseCase: getCharactersUseCase)
         
         // When
-        sut.getCharacters()
+        sut.getCharacters(page: 1)
         
         // Then
         XCTAssertTrue(getCharactersUseCase.isExecuteCalled)

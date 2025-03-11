@@ -8,7 +8,24 @@
 import Foundation
 import Combine
 
-protocol GetCharactersUseCase {
-    
+protocol GetCharactersUseCaseContract {
     func execute(page: Int) -> AnyPublisher<CharacterInformation, Error>
+}
+
+final class GetCharactersUseCase {
+    
+    private let repository: CharacterRepositoryContract
+    
+    init(repository: CharacterRepositoryContract = CharacterRepository()) {
+        
+        self.repository = repository
+    }
+}
+
+extension GetCharactersUseCase: GetCharactersUseCaseContract {
+    
+    func execute(page: Int) -> AnyPublisher<CharacterInformation, Error> {
+        
+        return repository.getCharacters(page: page)
+    }
 }

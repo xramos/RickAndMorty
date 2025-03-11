@@ -9,31 +9,56 @@ import Foundation
 import SwiftUI
 import Combine
 
-class CharacterDetailViewModel: ObservableObject {
+protocol CharacterDetailViewModelContract {
+    var isLoadingPublisher: AnyPublisher<Bool, Never> { get }
+    var characterPublisher: AnyPublisher<Character, Never> { get }
+    var originLocationPublisher: AnyPublisher<CharacterLocation?, Never> { get }
+    var lastLocationPublisher: AnyPublisher<CharacterLocation?, Never> { get }
     
-    let getLocationUseCase: GetLocationUseCase
+    func getLocations()
+}
+
+class CharacterDetailViewModel {
     
-    @Published internal var state: State = .loading
+    let getLocationUseCase: GetLocationUseCaseContract
+    
+    @Published public private(set) var isLoading: Bool = false
     
     @Published public private(set) var character: Character
-    
     @Published public private(set) var originLocation: CharacterLocation?
     @Published public private(set) var lastLocation: CharacterLocation?
     
     private var cancellable: AnyCancellable?
     
-    // MARK: - Methods
-    
-    init(getLocationUseCase: GetLocationUseCase = GetLocationUseCaseImplementation(),
+    init(getLocationUseCase: GetLocationUseCaseContract = GetLocationUseCase(),
          character: Character) {
         
         self.getLocationUseCase = getLocationUseCase
         self.character = character
     }
+}
+
+extension CharacterDetailViewModel: CharacterDetailViewModelContract {
+    
+    var isLoadingPublisher: AnyPublisher<Bool, Never> {
+        $isLoading.eraseToAnyPublisher()
+    }
+    
+    var characterPublisher: AnyPublisher<Character, Never> {
+        $character.eraseToAnyPublisher()
+    }
+    
+    var originLocationPublisher: AnyPublisher<CharacterLocation?, Never> {
+        $originLocation.eraseToAnyPublisher()
+    }
+    
+    var lastLocationPublisher: AnyPublisher<CharacterLocation?, Never> {
+        $lastLocation.eraseToAnyPublisher()
+    }
     
     func getLocations() {
         
-        state = .loading
+        isLoading = true
         
         getLocation(locationId: character.originId) { location in
             
@@ -41,8 +66,6 @@ class CharacterDetailViewModel: ObservableObject {
                 
                 self.originLocation = location
             }
-            
-            self.state = .loading
             
             self.getLocation(locationId: self.character.locationId) { location in
                 
@@ -53,6 +76,9 @@ class CharacterDetailViewModel: ObservableObject {
             }
         }
     }
+}
+
+private extension CharacterDetailViewModel {
     
     func getLocation(locationId: Int, completionHandler: @escaping (CharacterLocation?) -> Void) {
         
@@ -60,7 +86,7 @@ class CharacterDetailViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 
-                self.state = .loaded
+                self.isLoading = false
                 
                 switch completion {
                 case .finished:
@@ -73,14 +99,5 @@ class CharacterDetailViewModel: ObservableObject {
             
                 completionHandler(location)
             })
-    }
-}
-
-extension CharacterDetailViewModel {
-    
-    enum State: Equatable {
-        
-        case loading
-        case loaded
     }
 }

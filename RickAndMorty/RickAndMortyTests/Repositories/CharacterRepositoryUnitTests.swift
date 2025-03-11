@@ -1,5 +1,5 @@
 //
-//  CharacterRepositoryImplementationUnitTests.swift
+//  CharacterRepositoryUnitTests.swift
 //  RickAndMortyTests
 //
 //  Created by Xavier Ramos Sole on 6/11/24.
@@ -10,7 +10,7 @@ import Combine
 
 @testable import RickAndMorty
 
-final class CharacterRepositoryImplementationUnitTests: XCTestCase {
+final class CharacterRepositoryUnitTests: XCTestCase {
 
     var sut: CharacterRepository!
     
@@ -30,7 +30,7 @@ final class CharacterRepositoryImplementationUnitTests: XCTestCase {
 
 // MARK: - Get Characters
 
-extension CharacterRepositoryImplementationUnitTests {
+extension CharacterRepositoryUnitTests {
     
     func testGetCharactersOK() {
         
@@ -43,8 +43,8 @@ extension CharacterRepositoryImplementationUnitTests {
         
         let local = CharacterLocalDataSource(dbManager: DBManager(coreDataStack: TestCoreDataStack()))
         
-        sut = CharacterRepositoryImplementation(localDataSource: local,
-                                                remoteDatSource: remote)
+        sut = CharacterRepository(localDataSource: local,
+                                  remoteDatSource: remote)
         
         let exp = expectation(description: "expected characters")
         
@@ -96,8 +96,8 @@ extension CharacterRepositoryImplementationUnitTests {
         
         let local = CharacterLocalDataSource(dbManager: DBManager(coreDataStack: TestCoreDataStack()))
         
-        sut = CharacterRepositoryImplementation(localDataSource: local,
-                                                remoteDatSource: remote)
+        sut = CharacterRepository(localDataSource: local,
+                                  remoteDatSource: remote)
         
         let exp = expectation(description: "expected characters")
         
@@ -183,7 +183,7 @@ extension CharacterRepositoryImplementationUnitTests {
 
 // MARK: - Get Location
 
-extension CharacterRepositoryImplementationUnitTests {
+extension CharacterRepositoryUnitTests {
     
     func testGetLocationOK() {
         
@@ -196,8 +196,8 @@ extension CharacterRepositoryImplementationUnitTests {
         
         let local = CharacterLocalDataSource(dbManager: DBManager(coreDataStack: TestCoreDataStack()))
         
-        sut = CharacterRepositoryImplementation(localDataSource: local,
-                                                remoteDatSource: remote)
+        sut = CharacterRepository(localDataSource: local,
+                                  remoteDatSource: remote)
         
         let exp = expectation(description: "expected location")
         
@@ -238,8 +238,8 @@ extension CharacterRepositoryImplementationUnitTests {
         
         let local = CharacterLocalDataSource(dbManager: DBManager(coreDataStack: TestCoreDataStack()))
         
-        sut = CharacterRepositoryImplementation(localDataSource: local,
-                                                remoteDatSource: remote)
+        sut = CharacterRepository(localDataSource: local,
+                                  remoteDatSource: remote)
         
         let exp = expectation(description: "expected location")
         

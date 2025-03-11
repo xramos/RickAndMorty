@@ -10,7 +10,7 @@ import Combine
 
 @testable import RickAndMorty
 
-class CharacterRepositoryMock: CharacterRepository {
+class CharacterRepositoryMock: CharacterRepositoryContract {
     
     var isGetCharactersCalled: Bool = false
     var isGetLocationCalled: Bool = false

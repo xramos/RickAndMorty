@@ -10,7 +10,9 @@ import PreviewSnapshots
 
 struct CharacterListView: View {
     
-    @StateObject var viewModel: CharacterListViewModel = CharacterListViewModel()
+    var viewModel: CharacterListViewModelContract
+    
+    @State var characters: [Character] = []
     
     var body: some View {
         
@@ -20,10 +22,12 @@ struct CharacterListView: View {
             
         }.task {
             
-            if viewModel.characters.isEmpty {
+            if characters.isEmpty {
                 
-                viewModel.getCharacters()
+                viewModel.getCharacters(page: 1)
             }
+        }.onReceive(viewModel.charactersPublisher) {
+            characters = $0
         }
     }
     
@@ -34,7 +38,7 @@ struct CharacterListView: View {
             
             LazyVStack {
                 
-                ForEach(viewModel.characters) { character in
+                ForEach(characters) { character in
                     
                     NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(character: character))) {
                         
@@ -73,7 +77,7 @@ struct CharacterListView_Previews: PreviewProvider {
             .init(name: "Light", state: .light),
             .init(name: "Dark", state: .dark)
         ], configure: { state in
-            CharacterListView()
+            CharacterListView(viewModel: CharacterListViewModel())
                 .preferredColorScheme(state)
         })
     }

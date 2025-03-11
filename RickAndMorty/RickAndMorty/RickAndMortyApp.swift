@@ -16,7 +16,7 @@ struct RickAndMortyApp: App {
             
             NavigationView {
                 
-                CharacterListView()
+                CharacterListView(viewModel: CharacterListViewModel())
             }
             .tint(Color.accentColor)
         }

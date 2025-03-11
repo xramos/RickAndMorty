@@ -1,5 +1,5 @@
 //
-//  GetCharactersImplementationUnitTests.swift
+//  GetCharactersUnitTests.swift
 //  RickAndMortyTests
 //
 //  Created by Xavier Ramos Sole on 6/11/24.
@@ -9,7 +9,7 @@ import XCTest
 
 @testable import RickAndMorty
 
-final class GetCharactersImplementationUnitTests: XCTestCase {
+final class GetCharactersUnitTests: XCTestCase {
 
     var sut: GetCharactersUseCase!
     
@@ -24,7 +24,7 @@ final class GetCharactersImplementationUnitTests: XCTestCase {
      
         // Given
         let repository = CharacterRepositoryMock()
-        sut = GetCharactersUseCaseImplementation(repository: repository)
+        sut = GetCharactersUseCase(repository: repository)
         
         // When
         _ = sut.execute(page: 1)
